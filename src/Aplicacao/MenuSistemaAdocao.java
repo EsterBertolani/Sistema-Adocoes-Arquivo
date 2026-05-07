@@ -131,10 +131,9 @@ public class MenuSistemaAdocao {
 								+ "2. Total de Gatos\n"
 								+ "3. Total de Outros Animais\n"
 								+ "4. Media de idade aproximada dos animais disponiveis\n"
-								+ "5. Porcentagem de adoções feitas"
+								+ "5. Porcentagem de adoções feitas\n"
 								+ "0. Voltar");
 
-						System.out.print("Escolha: ");
 						opcao1 = TratamentoEntrada.lerInt(scan, "Escolha: ", 0, Integer.MAX_VALUE);
 
 						switch (opcao1) {
