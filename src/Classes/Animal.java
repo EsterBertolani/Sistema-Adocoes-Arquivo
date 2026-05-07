@@ -9,18 +9,16 @@ public class Animal {
 	protected char genero;
 	protected String raca;
 	protected String cor;
-	
+
 	protected boolean castrado;
 	protected boolean vacinado;
 	protected boolean adotado = false;
 
-	
-	
 	public Animal() {
 		super();
 		this.nome = "";
 		this.idade = 0;
-		this.genero = "".charAt(0);
+		this.genero = '\0';
 		this.raca = "";
 		this.cor = "";
 		this.castrado = false;
@@ -39,53 +37,59 @@ public class Animal {
 		this.vacinado = vacinado;
 		this.adotado = false;
 	}
-	
-	
+
 	public String getNome() {
 		return nome;
 	}
+
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	
+
 	public int getIdade() {
 		return idade;
 	}
+
 	public void setIdade(int idade) {
 		this.idade = idade;
 	}
-	
+
 	public char getGenero() {
 		return genero;
 	}
+
 	public void setGenero(char genero) {
 		this.genero = genero;
 	}
-	
+
 	public String getRaca() {
 		return raca;
 	}
+
 	public void setRaca(String raca) {
 		this.raca = raca;
 	}
-	
+
 	public String getCorPelo() {
 		return cor;
 	}
+
 	public void setCorPelo(String corPelo) {
 		this.cor = corPelo;
 	}
-	
+
 	public boolean isCastrado() {
 		return castrado;
 	}
+
 	public void setCastrado(boolean castrado) {
 		this.castrado = castrado;
 	}
-	
+
 	public boolean isVacinado() {
 		return vacinado;
 	}
+
 	public void setVacinado(boolean vacinado) {
 		this.vacinado = vacinado;
 	}
@@ -93,6 +97,7 @@ public class Animal {
 	public boolean isAdotado() {
 		return adotado;
 	}
+
 	public void setAdotado(boolean adotado) {
 		this.adotado = adotado;
 	}
@@ -100,21 +105,22 @@ public class Animal {
 	@Override
 	public String toString() {
 		return String.format("%s,%d,%s,%s,%s,%s,"
-				+ "%s", nome, idade, genero, cor, raca, (castrado? "Sim" : "Não"), 
-						(vacinado? "Sim" : "Não"));
+				+ "%s", nome, idade, genero, cor, raca, (castrado ? "Sim" : "Não"),
+				(vacinado ? "Sim" : "Não"));
 	}
+
 	public String toCSV() {
-	    return String.format("%s,%s,%d,%c,%s,%s,%s,%s",
-	            this.getClass().getSimpleName().toLowerCase(), // identifica o tipo
-	            nome,
-	            idade,
-	            genero,
-	            raca,
-	            cor,
-	            castrado,
-	            vacinado);
+		return String.format("%s,%s,%d,%c,%s,%s,%s,%s",
+				this.getClass().getSimpleName().toLowerCase(), // identifica o tipo
+				nome,
+				idade,
+				genero,
+				raca,
+				cor,
+				castrado,
+				vacinado);
 	}
-	
+
 	public static Animal fromCSV(String linha) {
 		String[] partes = linha.split(",");
 
@@ -154,5 +160,5 @@ public class Animal {
 				&& genero == other.genero && idade == other.idade && Objects.equals(nome, other.nome)
 				&& Objects.equals(raca, other.raca) && vacinado == other.vacinado;
 	}
-	
+
 }

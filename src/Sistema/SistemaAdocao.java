@@ -1,25 +1,26 @@
 package Sistema;
+
 import java.util.Scanner;
 import Classes.*;
 import Utilidade.TratamentoEntrada;
 
-public class SistemaAdocao extends ControleSistema{
+public class SistemaAdocao extends ControleSistema {
 	Adotante adotante;
 	Animal animal;
 
 	public void addAdotante(String nome, String cpf, String telefone, String endereco) {
 		carregarAdotantes();
 		boolean cpfExiste = false;
-		for(Adotante a: adotantes) {
-			if(a.getCpf().equals(cpf)) {
+		for (Adotante a : adotantes) {
+			if (a.getCpf().equals(cpf)) {
 				cpfExiste = true;
 				break;
 			}
 		}
-		if(cpfExiste) {
+		if (cpfExiste) {
 			System.out.println("Já existe um adotante com esse CPF");
 		} else {
-			adotante = new Adotante(nome,cpf,telefone, endereco);
+			adotante = new Adotante(nome, cpf, telefone, endereco);
 			adotantes.add(adotante);
 			System.out.println("Adotante cadastrado com sucesso!");
 			salvaAdotante();
@@ -27,11 +28,10 @@ public class SistemaAdocao extends ControleSistema{
 
 	}
 
-	public void addAnimal(String tipo,String nome,int idade,char sexo,String raca,String cor,
-			boolean castrado,boolean vacinado) {
+	public void addAnimal(Scanner sc, String tipo, String nome, int idade, char sexo, String raca, String cor,
+			boolean castrado, boolean vacinado) {
 		carregarAnimais();
-		Scanner sc = new Scanner(System.in);
-		
+
 		// Verifica se já existe um animal com mesmo nome e tipo
 		for (Animal a : animais) {
 			if (a.getNome().equalsIgnoreCase(nome) && a.getClass().getSimpleName().equalsIgnoreCase(tipo)) {
@@ -43,30 +43,31 @@ public class SistemaAdocao extends ControleSistema{
 		Animal novoAnimal = null;
 
 		switch (tipo) {
-		case "cachorro":
-			String porte = TratamentoEntrada.lerString(sc, "Qual o porte do cachorro: ");
-			boolean adestrado = TratamentoEntrada.lerRespostaSimNao(sc, "O animal é adestrado |Sim ou Não|? ");
-			boolean vermifugado = TratamentoEntrada.lerRespostaSimNao(sc, "O animal é vermifugado |Sim ou Não|? ");
+			case "cachorro":
+				String porte = TratamentoEntrada.lerString(sc, "Qual o porte do cachorro: ");
+				boolean adestrado = TratamentoEntrada.lerRespostaSimNao(sc, "O animal é adestrado |Sim ou Não|? ");
+				boolean vermifugado = TratamentoEntrada.lerRespostaSimNao(sc, "O animal é vermifugado |Sim ou Não|? ");
 
-			novoAnimal = new Cachorro(nome, idade, sexo, raca, cor, castrado, vacinado, porte, adestrado, vermifugado);
-			break;
+				novoAnimal = new Cachorro(nome, idade, sexo, raca, cor, castrado, vacinado, porte, adestrado,
+						vermifugado);
+				break;
 
-		case "gato":
-			boolean arisco = TratamentoEntrada.lerRespostaSimNao(sc, "O gato é arisco |Sim ou Não|? ");
-			boolean fiv = TratamentoEntrada.lerRespostaSimNao(sc, "O gato Possui FIV |Sim ou Não|? ");
-			boolean felv = TratamentoEntrada.lerRespostaSimNao(sc, "O gato possui FELV |Sim ou Não|? ");
+			case "gato":
+				boolean arisco = TratamentoEntrada.lerRespostaSimNao(sc, "O gato é arisco |Sim ou Não|? ");
+				boolean fiv = TratamentoEntrada.lerRespostaSimNao(sc, "O gato Possui FIV |Sim ou Não|? ");
+				boolean felv = TratamentoEntrada.lerRespostaSimNao(sc, "O gato possui FELV |Sim ou Não|? ");
 
-			novoAnimal = new Gato(nome, idade, sexo, raca, cor, castrado, vacinado, arisco, fiv, felv);
-			break;
+				novoAnimal = new Gato(nome, idade, sexo, raca, cor, castrado, vacinado, arisco, fiv, felv);
+				break;
 
-		case "outro":
-			String especie = TratamentoEntrada.lerString(sc,"Digite a especie do animal: ");
-			novoAnimal = new Outro(nome, idade, sexo, raca, cor, castrado, vacinado, especie);
-			break;
+			case "outro":
+				String especie = TratamentoEntrada.lerString(sc, "Digite a especie do animal: ");
+				novoAnimal = new Outro(nome, idade, sexo, raca, cor, castrado, vacinado, especie);
+				break;
 
-		default:
-			System.out.println("Tipo inválido. Animal não cadastrado.");
-			return;
+			default:
+				System.out.println("Tipo inválido. Animal não cadastrado.");
+				return;
 		}
 
 		animais.add(novoAnimal);
@@ -110,8 +111,7 @@ public class SistemaAdocao extends ControleSistema{
 		Adocao nova = new Adocao(
 				animalSelecionado.getNome(),
 				adotanteSelecionado.getCpf(),
-				dataAdocao
-				);
+				dataAdocao);
 
 		// 6) Remove o animal e persiste mudanças
 		animais.remove(animalSelecionado);
@@ -126,10 +126,8 @@ public class SistemaAdocao extends ControleSistema{
 
 	public void removerAdocao(String nomePet, String cpfAdotante) {
 		carregarAdocoes(); // carrega a lista atual
-		boolean removido = adocoes.removeIf(a ->
-		a.getNomePet().equalsIgnoreCase(nomePet.trim()) &&
-		a.getCpfAdotante().replaceAll("\\D", "").equals(cpfAdotante.replaceAll("\\D", ""))
-				);
+		boolean removido = adocoes.removeIf(a -> a.getNomePet().equalsIgnoreCase(nomePet.trim()) &&
+				a.getCpfAdotante().replaceAll("\\D", "").equals(cpfAdotante.replaceAll("\\D", "")));
 
 		if (removido) {
 			salvarAdocoes(); // regrava o arquivo com a lista atualizada
@@ -139,15 +137,13 @@ public class SistemaAdocao extends ControleSistema{
 		}
 	}
 
-
-
-	//------------------ nat metodos de estatistica
+	// ------------------ nat metodos de estatistica
 	public int totalCachorros() {
 		carregarAnimais();
-		int total =0;
-		for(int i=0; i<animais.size(); i++) {
-			if (animais.get(i) instanceof Cachorro) { //tive q usar o instanceof por q trata de herança
-				total++;       //ele so conta o "obj" cachorro
+		int total = 0;
+		for (int i = 0; i < animais.size(); i++) {
+			if (animais.get(i) instanceof Cachorro) { // tive q usar o instanceof por q trata de herança
+				total++; // ele so conta o "obj" cachorro
 			}
 		}
 		return total;
@@ -155,8 +151,8 @@ public class SistemaAdocao extends ControleSistema{
 
 	public int totalGatinhos() {
 		carregarAnimais();
-		int total =0;
-		for (int i=0; i<animais.size(); i++) {
+		int total = 0;
+		for (int i = 0; i < animais.size(); i++) {
 			if (animais.get(i) instanceof Gato) {
 				total++;
 			}
@@ -166,8 +162,8 @@ public class SistemaAdocao extends ControleSistema{
 
 	public int totalOutros() {
 		carregarAnimais();
-		int total=0;
-		for(int i=0; i<animais.size(); i++) {
+		int total = 0;
+		for (int i = 0; i < animais.size(); i++) {
 			if (animais.get(i) instanceof Outro) {
 				total++;
 			}
@@ -186,14 +182,14 @@ public class SistemaAdocao extends ControleSistema{
 			System.out.println();
 			soma += a.getIdade();
 		}
-		int media =  soma / animais.size();
-		System.out.printf("A Média de idade dos animais é: %d anos%n" , media);
+		int media = soma / animais.size();
+		System.out.printf("A Média de idade dos animais é: %d anos%n", media);
 		return media;
 	}
 
 	public double calcularPorcentagemAdocao() {
-		carregarAnimais();  // Essa parte vai lsitar os animais disponíveis
-		carregarAdocoes();  // E aqui vai carregar as adoções
+		carregarAnimais(); // Essa parte vai lsitar os animais disponíveis
+		carregarAdocoes(); // E aqui vai carregar as adoções
 
 		int totalAnimais = animais.size() + adocoes.size(); // vai pegar o total de diposníveis + adoção
 

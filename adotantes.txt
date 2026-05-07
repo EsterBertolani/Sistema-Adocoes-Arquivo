@@ -1,2 +1,1 @@
-ester,123456789,333333333,av america
-0,9,d0,adasjdajda
+Ester,12345678910,2740028922,av america

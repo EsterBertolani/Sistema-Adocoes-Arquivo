@@ -1,1 +1,1 @@
-cachorro,plol,3,3,dsa,cvx,true,true,lokn,false,false
+cachorro,Bidu,5,M,Boder Collie,preto e branco,false,true,m�dio,true,true

@@ -13,7 +13,6 @@ import Classes.Outro;
 
 public class Listagem {
 
-
     // LISTAR ANIMAIS DISPONÍVEIS
 
     public static ArrayList<Animal> listarAnimaisDisponiveis(String caminho) {
@@ -25,8 +24,8 @@ public class Listagem {
                 disponiveis.add(a);
             }
         }
-        if(disponiveis.isEmpty()) {
-        	System.out.println("Nenhum animal disponivel para adoção");
+        if (disponiveis.isEmpty()) {
+            System.out.println("Nenhum animal disponivel para adoção");
         }
         return disponiveis;
     }
@@ -42,8 +41,8 @@ public class Listagem {
                 gatos.add((Gato) a);
             }
         }
-        if(gatos.isEmpty()) {
-        	System.out.println("Nenhum Gato disponivel para adoção");
+        if (gatos.isEmpty()) {
+            System.out.println("Nenhum Gato disponivel para adoção");
         }
         return gatos;
     }
@@ -59,8 +58,8 @@ public class Listagem {
                 cachorros.add((Cachorro) a);
             }
         }
-        if(cachorros.isEmpty()) {
-        	System.out.println("Nenhum Cachorro disponivel para adoção");
+        if (cachorros.isEmpty()) {
+            System.out.println("Nenhum Cachorro disponivel para adoção");
         }
         return cachorros;
     }
@@ -76,8 +75,8 @@ public class Listagem {
                 outros.add((Outro) a);
             }
         }
-        if(outros.isEmpty()) {
-        	System.out.println("Nenhum animal classificado como Outros disponivel para adoção");
+        if (outros.isEmpty()) {
+            System.out.println("Nenhum animal classificado como Outros disponivel para adoção");
         }
         return outros;
     }
@@ -93,8 +92,8 @@ public class Listagem {
                 castrados.add(a);
             }
         }
-        if(castrados.isEmpty()) {
-        	System.out.println("Nenhum animal castrado disponivel para adoção");
+        if (castrados.isEmpty()) {
+            System.out.println("Nenhum animal castrado disponivel para adoção");
         }
         return castrados;
     }
@@ -126,8 +125,8 @@ public class Listagem {
                 }
             }
         }
-        if(filtrados.isEmpty()) {
-        	System.out.println("Nenhum animal do genero selecionado foi encontrado");
+        if (filtrados.isEmpty()) {
+            System.out.println("Nenhum animal do genero selecionado foi encontrado");
         }
         return filtrados;
     }
@@ -141,15 +140,19 @@ public class Listagem {
             String linha;
 
             while ((linha = ler.readLine()) != null) {
-                Adocao a = Adocao.fromCSV(linha);
-                listaAdocoes.add(a);
+                try {
+                    Adocao a = Adocao.fromCSV(linha);
+                    listaAdocoes.add(a);
+                } catch (IllegalArgumentException e) {
+                    System.err.println("Linha inválida em " + caminho + ": " + linha);
+                }
             }
 
         } catch (IOException e) {
             System.out.println("Erro ao ler o arquivo: " + e.getMessage());
         }
-        if(listaAdocoes.isEmpty()) {
-        	System.out.println("Nenhuma adoção encontrada");
+        if (listaAdocoes.isEmpty()) {
+            System.out.println("Nenhuma adoção encontrada");
         }
 
         return listaAdocoes;
